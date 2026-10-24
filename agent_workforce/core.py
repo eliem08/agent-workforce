@@ -1,4 +1,5 @@
 """System of record for AI agents: onboarding, reviews, offboarding and reporting."""
+
 from __future__ import annotations
 
 from collections import defaultdict
@@ -8,9 +9,24 @@ from datetime import date
 __all__ = ["Worker", "Workforce", "ONBOARDING", "review"]
 
 ONBOARDING = {
-    "default": ["identity_created", "scopes_granted", "budget_set", "runbook_linked", "escalation_contact", "eval_suite_passed"],
-    "finance": ["identity_created", "scopes_granted", "budget_set", "runbook_linked", "escalation_contact", "eval_suite_passed",
-                "dual_approval_configured", "audit_log_enabled"],
+    "default": [
+        "identity_created",
+        "scopes_granted",
+        "budget_set",
+        "runbook_linked",
+        "escalation_contact",
+        "eval_suite_passed",
+    ],
+    "finance": [
+        "identity_created",
+        "scopes_granted",
+        "budget_set",
+        "runbook_linked",
+        "escalation_contact",
+        "eval_suite_passed",
+        "dual_approval_configured",
+        "audit_log_enabled",
+    ],
 }
 
 
@@ -47,8 +63,14 @@ def review(metrics: dict) -> dict:
         rating, action = "meets", "keep"
     else:
         rating, action = "below", "pip"
-    return {"score": round(score, 1), "rating": rating, "action": action, "success_rate": round(success, 3),
-            "cost_per_task": round(cost_per_task, 3), "escalation_rate": round(esc_rate, 3)}
+    return {
+        "score": round(score, 1),
+        "rating": rating,
+        "action": action,
+        "success_rate": round(success, 3),
+        "cost_per_task": round(cost_per_task, 3),
+        "escalation_rate": round(esc_rate, 3),
+    }
 
 
 class Workforce:

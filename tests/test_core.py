@@ -19,7 +19,9 @@ class Tests(unittest.TestCase):
         self.assertEqual(self.w.status, "probation")
 
     def test_review_ratings(self):
-        self.assertEqual(review({"tasks": 100, "successes": 99, "cost": 50, "escalations": 1})["action"], "expand_scope")
+        self.assertEqual(
+            review({"tasks": 100, "successes": 99, "cost": 50, "escalations": 1})["action"], "expand_scope"
+        )
         self.assertEqual(review({"tasks": 100, "successes": 80, "cost": 50, "escalations": 10})["action"], "pip")
         self.assertEqual(review({"tasks": 100, "successes": 99, "incidents": 2})["action"], "offboard")
         self.assertEqual(review({"tasks": 100, "successes": 50})["rating"], "unacceptable")
