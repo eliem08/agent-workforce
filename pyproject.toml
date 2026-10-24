@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "agent-workforce"
+version = "0.1.0"
+description = "Workday for agents: onboard, manage and offboard your digital workers"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+dependencies = []
+
+[project.scripts]
+agent-workforce = "agent_workforce.__main__:main"
+
+[tool.setuptools]
+packages = ["agent_workforce"]
