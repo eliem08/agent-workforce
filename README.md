@@ -46,7 +46,7 @@ Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless
 | **Business** | $349 per month | Up to 250 agents; Offboarding plans; Cost-centre reporting |
 | **Enterprise** | $1,500 per month | Unlimited agents; HRIS and IAM integration; SLA |
 
-To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+To start a trial or buy a plan, [request access](https://github.com/eliem08/agent-workforce/issues/new?title=Agent%20Workforce%20trial&labels=sales).
 
 ## Licence
 
