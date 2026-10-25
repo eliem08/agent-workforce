@@ -1,0 +1,15 @@
+[
+ {
+  "op": "review",
+  "payload": {
+   "metrics": {
+    "name": "metrics.json",
+    "content": "{\n  \"tasks\": 400,\n  \"successes\": 392,\n  \"cost\": 210,\n  \"escalations\": 6,\n  \"incidents\": 0,\n  \"target_cost_per_task\": 0.6\n}\n"
+   }
+  }
+ },
+ {
+  "op": "demo",
+  "payload": {}
+ }
+]

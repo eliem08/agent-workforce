@@ -1,0 +1,8 @@
+{
+  "tasks": 400,
+  "successes": 392,
+  "cost": 210,
+  "escalations": 6,
+  "incidents": 0,
+  "target_cost_per_task": 0.6
+}

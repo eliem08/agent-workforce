@@ -4,6 +4,7 @@ import os
 import sys
 from datetime import date
 
+from .commands import add_commands, run
 from .core import Workforce
 
 
@@ -58,11 +59,19 @@ def demo():
     print("offboard:", wf.offboard("ap-clerk-1", "replaced by v2"))
 
 
-def _run(argv=None):
+def build_parser():
     ap = argparse.ArgumentParser(prog="agent-workforce")
     sub = ap.add_subparsers(dest="cmd", required=True)
     sub.add_parser("demo")
-    ap.parse_args(argv)
+    add_commands(sub)
+    return ap
+
+
+def _run(argv=None):
+    ap = build_parser()
+    a = ap.parse_args(argv)
+    if a.cmd != "demo":
+        return run(a)
     demo()
     return 0
 

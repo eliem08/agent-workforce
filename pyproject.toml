@@ -23,6 +23,7 @@ dev = ["ruff>=0.6"]
 
 [project.scripts]
 agent-workforce = "agent_workforce.__main__:main"
+agent-workforce-web = "agent_workforce.web:main"
 
 [project.urls]
 Repository = "https://github.com/eliem08/agent-workforce"
