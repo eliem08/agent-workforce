@@ -1,4 +1,4 @@
-"""Workday for agents: onboard, manage and offboard your digital workers."""
+"""Agent Workforce: Onboard, review and offboard your digital workers."""
 
 from .core import *
 

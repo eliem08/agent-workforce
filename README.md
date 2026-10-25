@@ -1,15 +1,43 @@
-# agent-workforce
+<!-- sell-kit:start -->
+# Agent Workforce
 
 [![CI](https://github.com/eliem08/agent-workforce/actions/workflows/ci.yml/badge.svg)](https://github.com/eliem08/agent-workforce/actions/workflows/ci.yml)
 
-> **Workday for agents** — onboard, manage and offboard your digital workers.
+> **Onboard, review and offboard your digital workers.**
 
-Companies are "hiring" dozens of agents with no HR system: nobody knows who
-owns which agent, what it costs, whether it's any good, or which credentials
-to revoke when it's retired. `agent-workforce` is the system of record for
-digital workers.
+**Who it's for:** Ops and finance leaders managing fleets of AI agents.
 
-## What the MVP does
+**The problem:** Companies run dozens of agents with no record of who owns them, what they cost, whether they're any good or what to revoke when they're retired.
+
+**What you get:** Onboarding gates, monthly performance reviews, budget reporting by cost centre, and offboarding plans that list every credential to revoke.
+
+## Quickstart
+
+Customers receive a release archive with the wheel and the examples. Python 3.10+ and no other dependencies.
+
+```bash
+pip install agent_workforce-0.1.0-py3-none-any.whl
+agent-workforce demo
+```
+
+## Pricing
+
+Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+
+| Plan | Price | Includes |
+|---|---|---|
+| **Team** | $79 per month | Up to 25 agents; Onboarding gates and reviews; Budget reports |
+| **Business** | $349 per month | Up to 250 agents; Offboarding plans; Cost-centre reporting |
+| **Enterprise** | $1,500 per month | Unlimited agents; HRIS and IAM integration; SLA |
+
+To start a trial or buy a plan, email **sales@YOUR-DOMAIN.com**.
+
+## Licence
+
+Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a paid plan or an active trial; see [LICENSE](LICENSE).
+<!-- sell-kit:end -->
+
+## What it does
 
 - **Org records**: agent, role, human manager, cost centre, monthly budget,
   start date, status (`onboarding → probation → active → pip → offboarded`)
@@ -31,7 +59,7 @@ agent-workforce demo
 
 ## Roadmap
 
-- Sync credentials with agent-okta (auto-revoke on offboard)
+- Sync credentials with agentwarden (auto-revoke on offboard)
 - Pull metrics from agent-tracer automatically for monthly reviews
 - "Agent org chart" UI and approval workflows for new hires
 

@@ -5,13 +5,13 @@ System of record for AI agents as digital workers: lifecycle, onboarding, review
 **MVP:** worker records with a lifecycle (`onboarding → probation → active ↔ pip → offboarded`),
 onboarding checklist templates (default, finance), metric-based reviews → rating and action,
 offboarding plan, cost-centre reporting.
-**Product:** agent-okta credential sync, agent-tracer metric ingestion, approvals, org chart UI.
+**Product:** agentwarden credential sync, agent-tracer metric ingestion, approvals, org chart UI.
 
 ## 2. System context
 ```mermaid
 flowchart LR
   Manager -->|hire / approve| WF[Workforce service]
-  WF -->|provision identity + scopes| Okta[agent-okta]
+  WF -->|provision identity + scopes| Okta[agentwarden]
   Tracer[agent-tracer] -->|tasks, success, cost| Reviews
   WF --> Reviews[Monthly reviews]
   Reviews -->|pip / offboard| WF
@@ -35,7 +35,7 @@ Score ≥ 92 *exceeds* and expands scope. Score ≥ 82 *meets* and keeps the age
 
 ## 5. Production architecture
 Postgres (workers, checklists, reviews, spend by month), an event-driven integration with
-agent-okta (revoke on offboard, scope changes on promotion), monthly review jobs pulling from
+agentwarden (revoke on offboard, scope changes on promotion), monthly review jobs pulling from
 agent-tracer, and SOC 2-friendly audit exports.
 
 ## 6. Risks
