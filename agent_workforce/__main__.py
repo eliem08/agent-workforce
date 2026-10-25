@@ -12,7 +12,8 @@ def demo():
     ap = wf.hire(
         "ap-clerk-1", "Accounts payable clerk", "maria@acme.com", "Finance", 300, date(2026, 9, 1), template="finance"
     )
-    ap.credentials = ["quickbooks:write", "gmail:ap@acme.com", "bank:read"]
+    for cred in ("quickbooks:write", "gmail:ap@acme.com", "bank:read"):
+        wf.grant_credential("ap-clerk-1", cred)
     ap.artifacts = ["vendor-master.xlsx", "ap-runbook.md"]
     for item in list(ap.checklist):
         wf.complete("ap-clerk-1", item)

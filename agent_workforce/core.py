@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from collections import defaultdict
 from dataclasses import dataclass, field
 from datetime import date
@@ -48,6 +49,12 @@ class Worker:
 
 def review(metrics: dict) -> dict:
     """metrics: tasks, successes, cost, escalations, incidents (critical incidents)."""
+    for k in ("tasks", "successes", "cost", "escalations", "incidents"):
+        v = metrics.get(k, 0)
+        if not (isinstance(v, (int, float)) and math.isfinite(v) and v >= 0):
+            raise ValueError(f"{k} must be a finite number >= 0, got {v!r}")
+    if metrics.get("successes", 0) > metrics.get("tasks", 0):
+        raise ValueError("successes cannot exceed tasks")  # would read as >100% success and "exceeds"
     tasks = max(metrics.get("tasks", 0), 1)
     success = metrics.get("successes", 0) / tasks
     cost_per_task = metrics.get("cost", 0) / tasks
@@ -78,6 +85,10 @@ class Workforce:
         self.workers: dict[str, Worker] = {}
 
     def hire(self, agent_id, role, manager, cost_center, monthly_budget, start: date, template="default") -> Worker:
+        if agent_id in self.workers:
+            raise ValueError(f"{agent_id} already has a record; offboarded agents are re-hired under a new id")
+        if not (math.isfinite(monthly_budget) and monthly_budget >= 0):
+            raise ValueError("monthly_budget must be a finite number >= 0")
         w = Worker(agent_id, role, manager, cost_center, monthly_budget, start)
         w.checklist = {item: False for item in ONBOARDING[template]}
         self.workers[agent_id] = w
@@ -89,14 +100,26 @@ class Workforce:
             raise KeyError(f"{item} not in checklist")
         w.checklist[item] = True
 
+    def grant_credential(self, agent_id, credential: str):
+        """Record every credential an agent holds so offboarding knows exactly what to revoke."""
+        w = self.workers[agent_id]
+        if w.status == "offboarded":
+            raise ValueError("cannot grant credentials to an offboarded agent")
+        if credential not in w.credentials:
+            w.credentials.append(credential)
+
     def activate(self, agent_id):
         w = self.workers[agent_id]
+        if w.status != "onboarding":
+            raise ValueError(f"only an onboarding agent can be activated (status is {w.status})")
         missing = [k for k, done in w.checklist.items() if not done]
         if missing:
             raise ValueError(f"onboarding incomplete: {missing}")
         w.status = "probation"
 
     def record_spend(self, agent_id, month: str, cost: float):
+        if not (math.isfinite(cost) and cost >= 0):
+            raise ValueError("cost must be a finite number >= 0")
         w = self.workers[agent_id]
         w.spend[month] = w.spend.get(month, 0) + cost
 
@@ -107,7 +130,9 @@ class Workforce:
         r = review(metrics)
         r["period"] = period
         w.reviews.append(r)
-        if r["action"] == "pip":
+        if r["action"] == "offboard":
+            w.status = "suspended"  # stop work now; a human runs offboard() to revoke and hand over
+        elif r["action"] == "pip":
             w.status = "pip"
         elif r["action"] in ("keep", "expand_scope"):
             w.status = "active"
@@ -115,6 +140,8 @@ class Workforce:
 
     def offboard(self, agent_id, reason: str) -> dict:
         w = self.workers[agent_id]
+        if w.status == "offboarded":
+            raise ValueError(f"{agent_id} is already offboarded")
         plan = {
             "agent": agent_id,
             "reason": reason,
