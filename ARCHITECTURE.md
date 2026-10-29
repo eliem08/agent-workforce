@@ -19,6 +19,9 @@ flowchart LR
   WF --> Finance[Cost-centre reports]
 ```
 
+Note: the agentwarden and agent-tracer integrations in this diagram are roadmap items,
+not shipped; see §5.
+
 ## 3. Review model
 `score = 100·success_rate − 40·escalation_rate − 15·max(0, cost_per_task/target − 1) − 25·incidents`.
 Two or more incidents, or a success rate under 60%, is *unacceptable* and leads to offboarding.
@@ -33,10 +36,11 @@ Score ≥ 92 *exceeds* and expands scope. Score ≥ 82 *meets* and keeps the age
 - **Reviews are pure functions of metrics.** They're reproducible, and their thresholds are
   versioned policy.
 
-## 5. Production architecture
-Postgres (workers, checklists, reviews, spend by month), an event-driven integration with
-agentwarden (revoke on offboard, scope changes on promotion), monthly review jobs pulling from
-agent-tracer, and SOC 2-friendly audit exports.
+## 5. Future production architecture (not shipped)
+Not shipped: the MVP is file-backed, and the integrations below are future work (see the
+README Roadmap). Postgres (workers, checklists, reviews, spend by month), an event-driven
+integration with agentwarden (revoke on offboard, scope changes on promotion), monthly review
+jobs pulling from agent-tracer, and SOC 2-friendly audit exports.
 
 ## 6. Risks
 Metric definitions vary by role (an SDR is not an AP clerk), so role-specific scorecards with
