@@ -47,20 +47,24 @@ To sell self-serve, set four variables and point a Stripe webhook at `https://<y
 |---|---|
 | `STRIPE_SECRET_KEY` | `sk_live_...` |
 | `STRIPE_WEBHOOK_SECRET` | `whsec_...` |
-| `STRIPE_PRICES` | `team=price_123,business=price_456` |
+| `STRIPE_PRICES` | `team=price_123,business=price_456,enterprise=price_789` |
 | `PUBLIC_URL` | `https://agent-workforce.example.com` |
 
-Buyers pick a plan on `/pricing`, pay on Stripe Checkout and see their API key once on the success page. Cancelling the subscription revokes the key. A selling server always requires a key.
+Buyers pick a plan on `/pricing`, pay on Stripe Checkout and see their API key once on the success page. Cancelling the subscription revokes the key. A selling server always requires a key. Copy `.env.example` to `.env` and fill in real values (never commit `.env`).
 
 ## Pricing
 
-Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+Monthly plans include a 14-day free trial. Prices in USD, billed monthly unless noted.
 
 | Plan | Price | Includes |
 |---|---|---|
-| **Team** | $79 per month | Up to 25 agents; Onboarding gates and reviews; Budget reports |
-| **Business** | $349 per month | Up to 250 agents; Offboarding plans; Cost-centre reporting |
-| **Enterprise** | $1,500 per month | Unlimited agents; HRIS and IAM integration; SLA |
+| **Team** | $79 per month | Up to 25 agents (licence term); Onboarding gates and reviews; Budget reports |
+| **Business** | $349 per month | Everything in Team; up to 250 agents (licence term) |
+| **Enterprise** | $1,500 per month | Everything in Team; unlimited agents (licence term); SLA |
+
+All plans unlock the same software in this release: offboarding plans and cost-centre
+reporting are core features, not Business-gated, and HRIS/IAM integration is on the
+Roadmap, not shipped. Agent-count limits are licence terms, not code-enforced limits.
 
 To start a trial or buy a plan, [request access](https://github.com/eliem08/agent-workforce/issues/new?title=Agent%20Workforce%20trial&labels=sales).
 
@@ -91,6 +95,7 @@ agent-workforce demo
 
 ## Roadmap
 
+- HRIS and IAM integration
 - Sync credentials with agentwarden (auto-revoke on offboard)
 - Pull metrics from agent-tracer automatically for monthly reviews
 - "Agent org chart" UI and approval workflows for new hires
