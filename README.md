@@ -17,8 +17,9 @@ Customers receive a release archive with the wheel and the examples. Python 3.10
 
 ```bash
 pip install agent_workforce-0.1.0-py3-none-any.whl
-agent-workforce review examples/metrics.json
-agent-workforce demo
+agent-workforce hire support-bot --role support --manager dana --cost-center cx --monthly-budget 500 --store workforce.json
+agent-workforce checklist support-bot --done identity_created --store workforce.json
+agent-workforce credential support-bot zendesk-api-key --store workforce.json
 ```
 
 ## Web app and API
@@ -33,7 +34,7 @@ docker build -t agent-workforce . && docker run -p 8000:8000 -e API_KEYS=sk_... 
 
 Every API call needs `Authorization: Bearer <key>` once any key exists; a server on a public address refuses to start without one. Calls are rate-limited per key (60/min, `--rate`) and metered: `agent-workforce-web usage` prints calls per key for billing.
 
-Endpoints: `POST /api/demo`, `POST /api/review`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
+Endpoints: `POST /api/demo`, `POST /api/review`, `POST /api/hire`, `POST /api/checklist`, `POST /api/credential`, `POST /api/activate`, `POST /api/spend`, `POST /api/monthly-review`, `POST /api/offboard`, `POST /api/roster`, `POST /api/report`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
 Files are sent as `{"name": ..., "content": ...}`, folders as `{"files": [...]}` or a base64 zip.
 
 ## Deploy and sell

@@ -1,5 +1,47 @@
 [
  {
+  "op": "hire",
+  "payload": {
+   "agent_id": "support-bot",
+   "role": "support",
+   "manager": "dana",
+   "cost_center": "cx",
+   "monthly_budget": 500.0,
+   "template": "default"
+  }
+ },
+ {
+  "op": "checklist",
+  "payload": {
+   "agent_id": "support-bot",
+   "done": [
+    "identity_created"
+   ]
+  }
+ },
+ {
+  "op": "credential",
+  "payload": {
+   "agent_id": "support-bot",
+   "credential": "zendesk-api-key"
+  }
+ },
+ {
+  "op": "spend",
+  "payload": {
+   "agent_id": "support-bot",
+   "cost": 120.0
+  }
+ },
+ {
+  "op": "roster",
+  "payload": {}
+ },
+ {
+  "op": "report",
+  "payload": {}
+ },
+ {
   "op": "review",
   "payload": {
    "metrics": {
