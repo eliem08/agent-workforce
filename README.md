@@ -55,15 +55,18 @@ Buyers pick a plan on `/pricing`, pay on Stripe Checkout and see their API key o
 
 ## Pricing
 
-Every plan starts with a 14-day free trial. Prices in USD, billed monthly unless noted.
+Monthly plans start with a 14-day free trial. Prices in USD, billed monthly unless noted.
 
 | Plan | Price | Includes |
 |---|---|---|
 | **Team** | $79 per month | Up to 25 agents; Onboarding gates and reviews; Budget reports |
 | **Business** | $349 per month | Up to 250 agents; Offboarding plans; Cost-centre reporting |
-| **Enterprise** | $1,500 per month | Unlimited agents; HRIS and IAM integration; SLA |
+| **Enterprise** | $1,500 per month | Unlimited agents; Self-hosted deployment; SLA |
 
 To start a trial or buy a plan, [request access](https://github.com/eliem08/agent-workforce/issues/new?title=Agent%20Workforce%20trial&labels=sales).
+
+Plan note: every plan runs the same software, and every API key unlocks all of it. Seat, agent and volume
+limits are licence terms; the code does not enforce them. Support, SLA and done-for-you items are services.
 
 ## Licence
 
