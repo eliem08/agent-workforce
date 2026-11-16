@@ -483,4 +483,24 @@ SPEC = {
             "id": "report",
         },
     ],
+    "plans": [
+        {
+            "key": "team",
+            "name": "Team",
+            "price": "$79 per month",
+            "features": ["Up to 25 agents", "Onboarding gates and reviews", "Budget reports"],
+        },
+        {
+            "key": "business",
+            "name": "Business",
+            "price": "$349 per month",
+            "features": ["Up to 250 agents", "Offboarding plans", "Cost-centre reporting"],
+        },
+        {
+            "key": "enterprise",
+            "name": "Enterprise",
+            "price": "$1,500 per month",
+            "features": ["Unlimited agents", "Self-hosted deployment", "SLA"],
+        },
+    ],
 }
