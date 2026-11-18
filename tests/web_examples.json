@@ -53,5 +53,15 @@
  {
   "op": "demo",
   "payload": {}
+ },
+ {
+  "op": "import",
+  "payload": {
+   "kind": "agents",
+   "file": {
+    "name": "agents.csv",
+    "content": "agent_id,role,manager,cost_center,monthly_budget,start\nsupport-bot,tier-1 support,maria@acme.com,CX,1200,2026-10-01\ninvoice-bot,AP clerk,dev@acme.com,FIN,400,2026-10-15\nsdr-agent,outbound SDR,lee@acme.com,SALES,900,2026-11-01\n"
+   }
+  }
  }
 ]

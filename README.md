@@ -9,7 +9,7 @@
 
 **The problem:** Companies run dozens of agents with no record of who owns them, what they cost, whether they're any good or what to revoke when they're retired.
 
-**What you get:** Onboarding gates, monthly performance reviews, budget reporting by cost centre, and offboarding plans that list every credential to revoke.
+**What you get:** Onboarding gates, monthly performance reviews, budget reporting by cost centre, and offboarding plans that list every credential to revoke, loaded in bulk from your inventory and billing exports.
 
 ## Quickstart
 
@@ -34,7 +34,7 @@ docker build -t agent-workforce . && docker run -p 8000:8000 -e API_KEYS=sk_... 
 
 Every API call needs `Authorization: Bearer <key>` once any key exists; a server on a public address refuses to start without one. Calls are rate-limited per key (60/min, `--rate`) and metered: `agent-workforce-web usage` prints calls per key for billing.
 
-Endpoints: `POST /api/demo`, `POST /api/review`, `POST /api/hire`, `POST /api/checklist`, `POST /api/credential`, `POST /api/activate`, `POST /api/spend`, `POST /api/monthly-review`, `POST /api/offboard`, `POST /api/roster`, `POST /api/report`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
+Endpoints: `POST /api/demo`, `POST /api/review`, `POST /api/hire`, `POST /api/import`, `POST /api/checklist`, `POST /api/credential`, `POST /api/activate`, `POST /api/spend`, `POST /api/monthly-review`, `POST /api/offboard`, `POST /api/roster`, `POST /api/report`, plus `GET /healthz` and `GET /api/spec` (machine-readable field list).
 Files are sent as `{"name": ..., "content": ...}`, folders as `{"files": [...]}` or a base64 zip.
 
 ## Deploy and sell
@@ -62,7 +62,7 @@ Monthly plans start with a 14-day free trial. Prices in USD, billed monthly unle
 |---|---|---|
 | **Team** | $79 per month | Up to 25 agents; Onboarding gates and reviews; Budget reports |
 | **Business** | $349 per month | Up to 250 agents; Offboarding plans; Cost-centre reporting |
-| **Enterprise** | $1,500 per month | Unlimited agents; Self-hosted deployment; SLA |
+| **Enterprise** | $1,500 per month | Unlimited agents; CSV import of agents, spend and credentials; Self-hosted deployment; SLA |
 
 To start a trial or buy a plan, [request access](https://github.com/eliem08/agent-workforce/issues/new?title=Agent%20Workforce%20trial&labels=sales).
 
@@ -87,12 +87,19 @@ Proprietary. Copyright (c) 2026 eliem08. All rights reserved. Use requires a pai
 - **Offboarding**: generates revocation + handover plan — credentials to revoke,
   owned artefacts transferred to the manager, logs archived, final cost report
 - **Workforce report**: headcount and spend by cost centre / manager, budget overruns
+- **Bulk import from CSV** instead of typing: `import agents` (an inventory or HR sheet), `import spend` (a
+  monthly billing export from your LLM provider or cloud) and `import credentials`. Every row is checked first, and
+  one bad row refuses the whole file and names its line. Re-running is safe: agents update in place, and spend sets
+  each agent's month to the file's total, so the same export imported twice is not counted twice.
 
 ## Quickstart
 
 ```bash
 pip install -e .
 agent-workforce demo
+agent-workforce import agents examples/agents.csv     # agent_id, role, manager, cost_center, monthly_budget
+agent-workforce import spend examples/spend.csv       # agent_id, month, cost
+agent-workforce report --month 2026-11
 ```
 
 ## Roadmap

@@ -1,0 +1,4 @@
+agent_id,role,manager,cost_center,monthly_budget,start
+support-bot,tier-1 support,maria@acme.com,CX,1200,2026-10-01
+invoice-bot,AP clerk,dev@acme.com,FIN,400,2026-10-15
+sdr-agent,outbound SDR,lee@acme.com,SALES,900,2026-11-01

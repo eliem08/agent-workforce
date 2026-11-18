@@ -6,8 +6,20 @@ from dataclasses import asdict
 from datetime import date
 
 from .core import ONBOARDING, Worker, Workforce
+from .importer import KINDS, import_csv
 
-OPS = ("hire", "checklist", "credential", "activate", "spend", "monthly-review", "offboard", "roster", "report")
+OPS = (
+    "hire",
+    "import",
+    "checklist",
+    "credential",
+    "activate",
+    "spend",
+    "monthly-review",
+    "offboard",
+    "roster",
+    "report",
+)
 
 
 def load(path: str) -> Workforce:
@@ -52,6 +64,13 @@ def add_ops(sub):
     p.add_argument("--monthly-budget", type=float, required=True)
     p.add_argument("--template", choices=sorted(ONBOARDING), default="default")
     p.add_argument("--start", help="YYYY-MM-DD, default today")
+    p = sub.add_parser("import", help="bulk load agents, monthly spend or credentials from a CSV")
+    p.add_argument("kind", choices=KINDS)
+    p.add_argument(
+        "file",
+        help="agents: agent_id, role, manager, cost_center, monthly_budget[, start, template]; "
+        "spend: agent_id, month, cost; credentials: agent_id, credential",
+    )
     p = sub.add_parser("checklist", help="show the onboarding checklist, or tick an item with --done")
     p.add_argument("agent_id")
     p.add_argument("--done", action="append", default=[], help="item completed (repeatable)")
@@ -101,6 +120,9 @@ def _run(wf: Workforce, a):
         start = date.fromisoformat(a.start) if a.start else date.today()
         w = wf.hire(a.agent_id, a.role, a.manager, a.cost_center, a.monthly_budget, start, a.template)
         print(f"hired {w.agent_id} as {w.role}; onboarding has {len(w.checklist)} steps (see `checklist`)")
+    elif c == "import":
+        n = import_csv(wf, a.kind, a.file)
+        print(f"imported {a.kind}: {n['added']} added, {n['updated']} updated, {n['skipped']} unchanged")
     elif c == "checklist":
         for item in a.done:
             wf.complete(a.agent_id, item)
